@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router";
-import { 
-  LayoutDashboard, 
-  ShoppingCart, 
-  Package, 
-  Calendar, 
-  ChefHat, 
-  TrendingUp, 
-  Users, 
-  Settings, 
-  Bell, 
+import {
+  Home,
+  ShoppingCart,
+  Package,
+  Utensils,
+  ChefHat,
+  FileText,
+  Users,
+  Settings,
+  Bell,
   Search,
   LogOut,
-  Sparkles,
   ChevronLeft,
-  ChevronRight,
-  Menu
+  Menu,
+  Sparkles,
+  UserCircle
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import {
@@ -29,160 +29,559 @@ import {
 import { useToastContext } from "../../context/ToastContext";
 
 const navigation = [
-  { name: 'Dashboard', href: '/app/dashboard', icon: LayoutDashboard },
-  { name: 'Mua sắm', href: '/app/shopping-list', icon: ShoppingCart, badge: 5 },
-  { name: 'Kho', href: '/app/inventory', icon: Package },
-  { name: 'Bữa ăn', href: '/app/meal-plan', icon: Calendar },
-  { name: 'Món ăn', href: '/app/recipes', icon: ChefHat },
-  { name: 'Báo cáo', href: '/app/reports', icon: TrendingUp },
-  { name: 'Gia đình', href: '/app/family', icon: Users },
-  { name: 'Cài đặt', href: '/app/settings', icon: Settings },
+  { name: "Dashboard", href: "/app/dashboard", icon: Home },
+  { name: "Mua sắm", href: "/app/shopping-list", icon: ShoppingCart, badge: 5 },
+  { name: "Kho hàng", href: "/app/inventory", icon: Package },
+  { name: "Bữa ăn", href: "/app/meal-plan", icon: Utensils },
+  { name: "Công thức", href: "/app/recipes", icon: ChefHat },
+  { name: "Báo cáo", href: "/app/reports", icon: FileText },
+  { name: "Gia đình", href: "/app/family", icon: Users },
+  { name: "Cài đặt", href: "/app/settings", icon: Settings },
 ];
 
-export default function MainLayout() {
+export function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { success, info } = useToastContext();
+  const { success } = useToastContext();
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
-  const isActive = (href: string) => location.pathname === href || (href === '/app/dashboard' && location.pathname === '/app');
+  const isActive = (href: string) =>
+    location.pathname === href ||
+    (href === "/app/dashboard" && location.pathname === "/app");
 
   const handleLogout = () => {
     success("Đã đăng xuất", "Hẹn gặp lại bạn!");
     setTimeout(() => navigate("/auth/login"), 800);
   };
 
-  const handleGoToSettings = () => {
-    navigate("/app/settings");
-  };
-
-  const handleGoToFamily = () => {
-    navigate("/app/family");
-  };
-
-  const sidebarWidth = sidebarExpanded ? "240px" : "64px";
+  const SIDEBAR_W = sidebarExpanded ? "var(--sidebar-width-expanded)" : "var(--sidebar-width)";
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      {/* Sidebar */}
-      <aside 
-        className="fixed left-0 top-0 h-screen bg-white border-r border-[var(--border-light)] z-50 shadow-[var(--shadow-sm)] transition-all duration-300 ease-in-out"
-        style={{ width: sidebarWidth }}
-      >
-        <div className="flex flex-col h-full py-4 overflow-hidden">
-          {/* Logo + Toggle */}
-          <div className={`flex items-center mb-6 px-2 ${sidebarExpanded ? 'justify-between' : 'justify-center'}`}>
-            <Link 
-              to="/app/dashboard" 
-              className="flex items-center gap-3 hover-lift-sm flex-shrink-0"
-            >
-              <div className="w-11 h-11 bg-gradient-purple rounded-[14px] flex items-center justify-center shadow-[var(--shadow-btn)] flex-shrink-0">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              {sidebarExpanded && (
-                <div className="overflow-hidden">
-                  <p className="font-black text-[var(--text-dark)] whitespace-nowrap text-base">NATEAT</p>
-                  <p className="text-xs text-[var(--text-muted)] whitespace-nowrap">Quản lý gia đình</p>
-                </div>
-              )}
-            </Link>
-            {sidebarExpanded && (
-              <button
-                onClick={() => setSidebarExpanded(false)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[var(--card-bg)] transition-smooth flex-shrink-0"
-              >
-                <ChevronLeft className="w-4 h-4 text-[var(--text-muted)]" />
-              </button>
-            )}
-          </div>
+    <div className="min-h-screen bg-[var(--background)]" style={{ display: "flex" }}>
 
-          {/* Collapse toggle when collapsed */}
-          {!sidebarExpanded && (
-            <button
-              onClick={() => setSidebarExpanded(true)}
-              className="mx-auto mb-2 w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[var(--card-bg)] transition-smooth"
+      {/* ===== SIDEBAR ===== */}
+      <aside
+        style={{
+          width: SIDEBAR_W,
+          minWidth: SIDEBAR_W,
+          transition: `width var(--transition-slow) var(--ease-smooth)`,
+          background: "var(--white)", borderRight: "1px solid var(--border-light)",
+          boxShadow: "var(--shadow-sidebar)",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          height: "100vh",
+          zIndex: 50,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* ---- Logo header ---- */}
+        <div
+          style={{
+            padding: "20px 12px 12px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: sidebarExpanded ? "space-between" : "center",
+            borderBottom: "1px solid rgba(0,0,0,0.04)",
+            flexShrink: 0,
+          }}
+        >
+          <Link
+            to="/app/dashboard"
+            style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}
+          >
+            {/* Logo icon */}
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                background: "linear-gradient(135deg, #F9E79F, #F9E79F)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 4px 14px rgba(249,231,159,0.45)",
+                flexShrink: 0,
+              }}
             >
-              <Menu className="w-4 h-4 text-[var(--text-muted)]" />
+              <Sparkles className="w-5 h-5" style={{ color: "#2C2C2C" }} strokeWidth={2.5} />
+            </div>
+
+            {/* Brand name — slides in when expanded */}
+            <div
+              style={{
+                overflow: "hidden",
+                maxWidth: sidebarExpanded ? 160 : 0,
+                opacity: sidebarExpanded ? 1 : 0,
+                transition: `max-width var(--transition-slow) var(--ease-smooth), opacity var(--transition-base) var(--ease-smooth)`,
+                whiteSpace: "nowrap",
+              }}
+            >
+              <p style={{ fontWeight: 900, color: "#FFFFFF", fontSize: 15, lineHeight: 1.2 }}>NATEAT</p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", fontWeight: 500 }}>Quản lý gia đình</p>
+            </div>
+          </Link>
+
+          {/* Collapse button */}
+          {sidebarExpanded && (
+            <button
+              onClick={() => setSidebarExpanded(false)}
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 8,
+                border: "none",
+                background: "rgba(255,255,255,0.10)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                flexShrink: 0,
+                transition: "background var(--transition-base)",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.20)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.10)")}
+            >
+              <ChevronLeft className="w-4 h-4" style={{ color: "var(--text-muted)" }} />
             </button>
           )}
+        </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-2 space-y-1 overflow-y-auto custom-scrollbar">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`
-                    relative flex items-center gap-3
-                    h-[44px] px-2.5
-                    rounded-[var(--radius-sm)] transition-smooth
-                    group
-                    ${active 
-                      ? 'bg-[#F0EEF8]' 
-                      : 'hover:bg-[var(--card-bg)]'
-                    }
-                  `}
-                  title={!sidebarExpanded ? item.name : undefined}
-                >
-                  {/* Active indicator bar */}
-                  {active && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-7 bg-[var(--gold)] rounded-r-full" />
-                  )}
-                  
-                  <div className="relative flex-shrink-0">
-                    <Icon 
-                      className={`w-5 h-5 ${active ? 'text-[var(--gold)]' : 'text-[var(--text-muted)] group-hover:text-[var(--text-dark)]'} transition-colors`}
-                      strokeWidth={active ? 2.5 : 2}
-                    />
-                    {/* Badge */}
-                    {item.badge && (
-                      <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[var(--danger)] rounded-full flex items-center justify-center border-2 border-white">
-                        <span className="text-[9px] font-bold text-white">{item.badge}</span>
-                      </div>
-                    )}
-                  </div>
+        {/* ---- Expand button when collapsed ---- */}
+        {!sidebarExpanded && (
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0 4px" }}>
+            <button
+              onClick={() => setSidebarExpanded(true)}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 10,
+                border: "none",
+                background: "rgba(0,0,0,0.04)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "background var(--transition-base)",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = "var(--purple-pale)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "rgba(0,0,0,0.04)")}
+            >
+              <Menu className="w-4 h-4" style={{ color: "var(--text-muted)" }} />
+            </button>
+          </div>
+        )}
 
-                  {/* Label when expanded */}
-                  {sidebarExpanded && (
-                    <span className={`text-sm font-semibold whitespace-nowrap transition-colors ${active ? 'text-[var(--purple-deep)]' : 'text-[var(--text-muted)] group-hover:text-[var(--text-dark)]'}`}>
-                      {item.name}
-                    </span>
-                  )}
+        {/* ---- Navigation ---- */}
+        <nav
+          className="custom-scrollbar"
+          style={{
+            flex: 1,
+            padding: "8px 10px",
+            overflowY: "auto",
+            overflowX: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
 
-                  {/* Tooltip when collapsed */}
-                  {!sidebarExpanded && (
-                    <div className="absolute left-full ml-3 px-3 py-1.5 bg-[var(--text-dark)] text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
-                      {item.name}
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                title={!sidebarExpanded ? item.name : undefined}
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  height: 44,
+                  padding: sidebarExpanded ? "0 12px" : "0",
+                  justifyContent: sidebarExpanded ? "flex-start" : "center",
+                  borderRadius: 12,
+                  textDecoration: "none",
+                  background: active ? "var(--purple-pale)" : "transparent",
+                  backdropFilter: active ? "blur(4px)" : "none",
+                  transition: "background var(--transition-base) var(--ease-smooth)",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={e => {
+                  if (!active) (e.currentTarget as HTMLElement).style.background = "var(--section-alt)";
+                }}
+                onMouseLeave={e => {
+                  if (!active) (e.currentTarget as HTMLElement).style.background = "transparent";
+                }}
+              >
+                {/* Active indicator */}
+                {active && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: 3,
+                      height: 26,
+                      background: "linear-gradient(180deg,#F9E79F,#F9E79F)",
+                      borderRadius: "0 4px 4px 0",
+                    }}
+                  />
+                )}
+
+                {/* Icon container */}
+                <div style={{ position: "relative", flexShrink: 0 }}>
+                  <Icon
+                    className="w-[19px] h-[19px]"
+                    style={{ color: active ? "var(--purple-primary)" : "var(--text-muted)" }}
+                    strokeWidth={active ? 2.5 : 2}
+                  />
+                  {/* Badge */}
+                  {item.badge && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -5,
+                        right: -5,
+                        width: 16,
+                        height: 16,
+                        background: "#EF4444",
+                        borderRadius: "50%",
+                        border: "2px solid #A569BD",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <span style={{ fontSize: 8, fontWeight: 700, color: "var(--text-dark)" }}>{item.badge}</span>
                     </div>
                   )}
-                </Link>
-              );
-            })}
-          </nav>
+                </div>
 
-          {/* User Profile */}
-          <div className="px-2 pt-4 border-t border-[var(--border-light)]">
+                {/* Label */}
+                <span
+                  style={{
+                    overflow: "hidden",
+                    maxWidth: sidebarExpanded ? 140 : 0,
+                    opacity: sidebarExpanded ? 1 : 0,
+                    transition: `max-width var(--transition-slow) var(--ease-smooth), opacity var(--transition-base) var(--ease-smooth)`,
+                    whiteSpace: "nowrap",
+                    fontSize: 13,
+                    fontWeight: active ? 700 : 500,
+                    color: active ? "var(--purple-primary)" : "var(--text-muted)",
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  {item.name}
+                </span>
+
+                {/* Tooltip khi collapsed */}
+                {!sidebarExpanded && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "calc(100% + 12px)",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "#2C2C2C",
+                      color: "var(--text-dark)",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      padding: "6px 12px",
+                      borderRadius: 8,
+                      whiteSpace: "nowrap",
+                      pointerEvents: "none",
+                      opacity: 0,
+                      transition: "opacity 0.15s",
+                      zIndex: 100,
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
+                    }}
+                    className="sidebar-tooltip"
+                  >
+                    {item.name}
+                    {item.badge && (
+                      <span style={{ marginLeft: 6, background: "#EF4444", borderRadius: 99, padding: "1px 6px", fontSize: 10 }}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* ---- User Profile ---- */}
+        <div
+          style={{
+            padding: "12px 10px 16px",
+            borderTop: "1px solid rgba(0,0,0,0.04)",
+            flexShrink: 0,
+          }}
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: sidebarExpanded ? "8px 10px" : "8px",
+                  justifyContent: sidebarExpanded ? "flex-start" : "center",
+                  borderRadius: 12,
+                  border: "none",
+                  background: "rgba(255,255,255,0.07)",
+                  cursor: "pointer",
+                  transition: "background var(--transition-base)",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--purple-pale)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                <Avatar
+                  className="flex-shrink-0"
+                  style={{
+                    width: 34,
+                    height: 34,
+                    border: "2px solid rgba(249,231,159,0.6)",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <AvatarImage src="" />
+                  <AvatarFallback
+                    style={{
+                      background: "linear-gradient(135deg, #F9E79F, #F9E79F)",
+                      color: "#2C2C2C",
+                      fontWeight: 800,
+                      fontSize: 12,
+                    }}
+                  >
+                    NA
+                  </AvatarFallback>
+                </Avatar>
+
+                <div
+                  style={{
+                    overflow: "hidden",
+                    maxWidth: sidebarExpanded ? 140 : 0,
+                    opacity: sidebarExpanded ? 1 : 0,
+                    transition: `max-width var(--transition-slow) var(--ease-smooth), opacity var(--transition-base) var(--ease-smooth)`,
+                    textAlign: "left",
+                  }}
+                >
+                  <p style={{ color: "var(--text-dark)", fontWeight: 700, fontSize: 13, whiteSpace: "nowrap" }}>Nguyễn Văn A</p>
+                  <p style={{ color: "var(--text-muted)", fontSize: 11, whiteSpace: "nowrap" }}>Trưởng nhóm</p>
+                </div>
+              </button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent side="right" align="end" className="w-56 ml-3">
+              <DropdownMenuLabel>
+                <div>
+                  <p className="font-semibold">Nguyễn Văn A</p>
+                  <p className="text-xs text-[var(--text-muted)] font-normal">admin@nateat.com</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/app/family")}>
+                <Users className="w-4 h-4 mr-2 text-[var(--purple-primary)]" />
+                Gia đình Nguyễn
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/app/settings")}>
+                <Settings className="w-4 h-4 mr-2 text-[var(--purple-primary)]" />
+                Cài đặt tài khoản
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-[var(--danger)]" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Đăng xuất
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </aside>
+
+      {/* ===== MAIN CONTENT ===== */}
+      <div
+        style={{
+          marginLeft: SIDEBAR_W,
+          flex: 1,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          transition: `margin-left var(--transition-slow) var(--ease-smooth)`,
+        }}
+      >
+        {/* Top Header */}
+        <header
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 40,
+            height: 64,
+            background: "rgba(255,255,255,0.95)",
+            backdropFilter: "blur(12px)",
+            borderBottom: "1px solid var(--border-purple)",
+            boxShadow: "0 2px 12px rgba(165,105,189,0.06)",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 24px",
+            gap: 16,
+          }}
+        >
+          {/* Search Bar */}
+          <div style={{ flex: 1, maxWidth: 480 }}>
+            <div style={{ position: "relative" }}>
+              <Search
+                className="w-4 h-4"
+                style={{
+                  position: "absolute",
+                  left: 14,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "var(--text-muted)",
+                }}
+              />
+              <input
+                type="search"
+                placeholder="Tìm kiếm thực phẩm, công thức..."
+                style={{
+                  width: "100%",
+                  paddingLeft: 40,
+                  paddingRight: 16,
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  background: "var(--card-bg)",
+                  border: "1.5px solid transparent",
+                  borderRadius: 12,
+                  fontSize: 13,
+                  color: "var(--text-dark)",
+                  outline: "none",
+                  transition: "border-color 0.2s, box-shadow 0.2s",
+                  fontFamily: "var(--font-body)",
+                }}
+                onFocus={e => {
+                  e.target.style.borderColor = "var(--purple-medium)";
+                  e.target.style.boxShadow = "var(--shadow-input-focus)";
+                  e.target.style.background = "#FFFFFF";
+                }}
+                onBlur={e => {
+                  e.target.style.borderColor = "transparent";
+                  e.target.style.boxShadow = "none";
+                  e.target.style.background = "var(--card-bg)";
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }}>
+            {/* Notifications */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className={`w-full flex items-center gap-3 rounded-[var(--radius-sm)] hover:bg-[var(--card-bg)] transition-smooth group p-1.5 ${sidebarExpanded ? 'justify-start' : 'justify-center'}`}>
-                  <Avatar className="w-9 h-9 border-2 border-transparent group-hover:border-[var(--gold)] transition-all flex-shrink-0">
+                <button
+                  style={{
+                    position: "relative",
+                    width: 40,
+                    height: 40,
+                    borderRadius: 11,
+                    border: "none",
+                    background: "var(--card-bg)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "var(--purple-pale)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "var(--card-bg)")}
+                >
+                  <Bell className="w-5 h-5" style={{ color: "var(--purple-primary)" }} />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 8,
+                      right: 8,
+                      width: 7,
+                      height: 7,
+                      background: "#EF4444",
+                      borderRadius: "50%",
+                      border: "2px solid #fff",
+                    }}
+                  />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <DropdownMenuLabel className="flex items-center justify-between">
+                  <span>Thông báo</span>
+                  <span className="text-xs font-normal text-[var(--text-muted)]">3 mới</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <div className="max-h-80 overflow-y-auto scrollbar-light">
+                  {[
+                    { emoji: "🥬", title: "Rau sắp hết hạn", desc: "Cải xanh sẽ hết hạn trong 2 ngày", time: "10 phút trước" },
+                    { emoji: "🛒", title: "Danh sách mới", desc: "Mẹ đã thêm 5 món vào danh sách", time: "1 giờ trước" },
+                    { emoji: "📊", title: "Báo cáo tuần", desc: "Chi tiêu tuần này: 2,350,000đ", time: "2 giờ trước" },
+                  ].map((n, i) => (
+                    <DropdownMenuItem key={i} className="flex-col items-start gap-1 py-3">
+                      <p className="text-sm font-semibold">{n.emoji} {n.title}</p>
+                      <p className="text-xs text-[var(--text-muted)]">{n.desc}</p>
+                      <span className="text-xs text-[var(--text-muted)]">{n.time}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* User Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "6px 12px 6px 6px",
+                    borderRadius: 12,
+                    border: "1.5px solid var(--border-purple)",
+                    background: "var(--card-bg)",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "var(--purple-primary)";
+                    (e.currentTarget as HTMLElement).style.background = "var(--purple-pale)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "var(--border-purple)";
+                    (e.currentTarget as HTMLElement).style.background = "var(--card-bg)";
+                  }}
+                >
+                  <Avatar style={{ width: 30, height: 30 }}>
                     <AvatarImage src="" />
-                    <AvatarFallback className="bg-gradient-gold text-white font-bold text-sm">
+                    <AvatarFallback
+                      style={{
+                        background: "linear-gradient(135deg,var(--purple-primary),var(--purple-medium))",
+                        color: "var(--text-dark)",
+                        fontSize: 11,
+                        fontWeight: 800,
+                      }}
+                    >
                       NA
                     </AvatarFallback>
                   </Avatar>
-                  {sidebarExpanded && (
-                    <div className="text-left overflow-hidden">
-                      <p className="text-sm font-semibold text-[var(--text-dark)] whitespace-nowrap truncate">Nguyễn Văn A</p>
-                      <p className="text-xs text-[var(--text-muted)] whitespace-nowrap truncate">Trưởng nhóm</p>
-                    </div>
-                  )}
+                  <div className="text-left hidden md:block">
+                    <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text-dark)", lineHeight: 1.3 }}>Nguyễn Văn A</p>
+                    <p style={{ fontSize: 11, color: "var(--text-muted)", lineHeight: 1 }}>Gia đình Nguyễn</p>
+                  </div>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="right" align="end" className="w-56 ml-2">
+              <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
                   <div>
                     <p className="font-semibold">Nguyễn Văn A</p>
@@ -190,12 +589,12 @@ export default function MainLayout() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleGoToFamily}>
-                  <Users className="w-4 h-4 mr-2" />
+                <DropdownMenuItem onClick={() => navigate("/app/family")}>
+                  <Users className="w-4 h-4 mr-2 text-[var(--purple-primary)]" />
                   Gia đình Nguyễn
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleGoToSettings}>
-                  <Settings className="w-4 h-4 mr-2" />
+                <DropdownMenuItem onClick={() => navigate("/app/settings")}>
+                  <UserCircle className="w-4 h-4 mr-2 text-[var(--purple-primary)]" />
                   Cài đặt tài khoản
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -206,123 +605,24 @@ export default function MainLayout() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <div 
-        className="transition-all duration-300 ease-in-out"
-        style={{ marginLeft: sidebarWidth }}
-      >
-        {/* Top Header */}
-        <header className="sticky top-0 z-40 h-16 bg-white border-b border-[var(--border-light)] shadow-sm">
-          <div className="h-full px-6 flex items-center justify-between gap-6">
-            {/* Search Bar */}
-            <div className="flex-1 max-w-xl">
-              <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] group-focus-within:text-[var(--gold)] transition-colors" />
-                <input
-                  type="search"
-                  placeholder="Tìm kiếm thực phẩm, công thức..."
-                  className="
-                    w-full pl-11 pr-4 py-2.5
-                    bg-[var(--card-bg)] 
-                    border border-transparent
-                    rounded-[var(--radius-sm)]
-                    text-sm text-[var(--text-dark)]
-                    placeholder:text-[var(--text-muted)]
-                    focus:outline-none focus:border-[var(--gold)]
-                    focus:shadow-[var(--shadow-input-focus)]
-                    transition-all
-                  "
-                />
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-3">
-              {/* Notifications */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="relative w-10 h-10 rounded-[var(--radius-sm)] flex items-center justify-center hover:bg-[var(--card-bg)] transition-smooth">
-                    <Bell className="w-5 h-5 text-[var(--text-muted)]" />
-                    <div className="absolute top-1.5 right-1.5 w-[var(--badge-size)] h-[var(--badge-size)] bg-[var(--danger)] rounded-full border-2 border-white" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-80">
-                  <DropdownMenuLabel className="flex items-center justify-between">
-                    <span>Thông báo</span>
-                    <span className="text-xs font-normal text-[var(--text-muted)]">3 mới</span>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <div className="max-h-80 overflow-y-auto">
-                    <DropdownMenuItem className="flex-col items-start gap-1 py-3">
-                      <p className="text-sm font-medium">🥬 Rau sắp hết hạn</p>
-                      <p className="text-xs text-[var(--text-muted)]">Cải xanh sẽ hết hạn trong 2 ngày</p>
-                      <span className="text-xs text-[var(--text-muted)]">10 phút trước</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex-col items-start gap-1 py-3">
-                      <p className="text-sm font-medium">🛒 Danh sách mới</p>
-                      <p className="text-xs text-[var(--text-muted)]">Mẹ đã thêm 5 món vào danh sách</p>
-                      <span className="text-xs text-[var(--text-muted)]">1 giờ trước</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="flex-col items-start gap-1 py-3">
-                      <p className="text-sm font-medium">📊 Báo cáo tuần</p>
-                      <p className="text-xs text-[var(--text-muted)]">Chi tiêu tuần này: 2,350,000đ</p>
-                      <span className="text-xs text-[var(--text-muted)]">2 giờ trước</span>
-                    </DropdownMenuItem>
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-3 px-3 py-2 rounded-[var(--radius-sm)] hover:bg-[var(--card-bg)] transition-smooth group">
-                    <Avatar className="w-8 h-8 border-2 border-transparent group-hover:border-[var(--gold)] transition-all">
-                      <AvatarImage src="" />
-                      <AvatarFallback className="bg-gradient-gold text-white text-sm font-bold">
-                        NA
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="text-left hidden md:block">
-                      <p className="text-sm font-semibold text-[var(--text-dark)]">Nguyễn Văn A</p>
-                      <p className="text-xs text-[var(--text-muted)]">Gia đình Nguyễn</p>
-                    </div>
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>
-                    <div>
-                      <p className="font-semibold">Nguyễn Văn A</p>
-                      <p className="text-xs text-[var(--text-muted)] font-normal">admin@nateat.com</p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleGoToFamily}>
-                    <Users className="w-4 h-4 mr-2" />
-                    Gia đình Nguyễn
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleGoToSettings}>
-                    <Settings className="w-4 h-4 mr-2" />
-                    Cài đặt tài khoản
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-[var(--danger)]" onClick={handleLogout}>
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Đăng xuất
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
         </header>
 
         {/* Page Content */}
-        <main className="p-6 min-h-[calc(100vh-4rem)]">
+        <main
+          style={{
+            flex: 1,
+            padding: 24,
+            background: "var(--background)",
+          }}
+        >
           <Outlet />
         </main>
       </div>
+
+      {/* Tooltip hover style */}
+      <style>{`
+        a:hover .sidebar-tooltip { opacity: 1 !important; }
+      `}</style>
     </div>
   );
 }

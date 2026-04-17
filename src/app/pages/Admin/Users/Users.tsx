@@ -25,7 +25,7 @@ const initialUsers = [
   { id: "4", name: "Phạm Thị D", email: "thid@email.com", phone: "0147258369", address: "Cần Thơ", role: "moderator", status: "active", groups: 2, avatar: "PD" },
 ];
 
-export default function Users() {
+export function Users() {
   const [users, setUsers] = useState(initialUsers);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUser, setSelectedUser] = useState<any>(null);

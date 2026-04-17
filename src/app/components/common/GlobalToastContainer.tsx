@@ -5,8 +5,7 @@ export function GlobalToastContainer() {
   const [toasts, setToasts] = useState<ToastProps[]>([]);
 
   useEffect(() => {
-    const unsubscribe = toastManager.subscribe(setToasts);
-    return unsubscribe;
+    return toastManager.subscribe(setToasts);
   }, []);
 
   return <ToastContainer toasts={toasts} />;

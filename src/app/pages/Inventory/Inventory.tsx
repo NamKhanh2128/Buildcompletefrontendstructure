@@ -48,7 +48,7 @@ const expiryLabels: Record<string, string> = {
   good: "Tốt",
 };
 
-export default function Inventory() {
+export function Inventory() {
   const { success, error, info } = useToastContext();
   const [items, setItems] = useState<FoodItem[]>(initialFoodItems);
   const [searchQuery, setSearchQuery] = useState("");
@@ -123,7 +123,7 @@ export default function Inventory() {
             Quản lý và theo dõi thực phẩm trong nhà 🏪
           </p>
         </div>
-        <Button 
+        <Button
           className="bg-gradient-to-r from-[var(--success)] to-[#16A34A] text-white font-semibold shadow-lg hover-lift rounded-[var(--radius-btn)] px-6 py-6 self-start md:self-auto"
           onClick={() => setShowAddItem(true)}
         >
@@ -145,9 +145,9 @@ export default function Inventory() {
                 className="pl-10 rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--success)] focus-visible:border-[var(--success)]"
               />
             </div>
-            <Button 
-              variant="outline" 
-              size="icon" 
+            <Button
+              variant="outline"
+              size="icon"
               className="rounded-[var(--radius-sm)] border-[var(--border-light)] hover:border-[var(--success)] hover:text-[var(--success)] transition-smooth"
               onClick={() => setShowFilter(true)}
             >
@@ -201,8 +201,8 @@ export default function Inventory() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredItems.map((item) => (
-                <Card 
-                  key={item.id} 
+                <Card
+                  key={item.id}
                   className="border-none shadow-[var(--shadow-card)] hover:shadow-xl transition-all rounded-[var(--radius)] overflow-hidden group"
                 >
                   <div className="aspect-video relative overflow-hidden bg-[var(--card-bg)]">
@@ -214,9 +214,9 @@ export default function Inventory() {
                     <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity" />
                     {/* Expiry Badge */}
                     <div className="absolute top-3 right-3">
-                      <Badge 
+                      <Badge
                         className="font-semibold border-none shadow-lg"
-                        style={{ 
+                        style={{
                           backgroundColor: expiryColors[item.expiryStatus] || 'var(--success)',
                           color: 'white'
                         }}
@@ -259,18 +259,18 @@ export default function Inventory() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
+                      <Button
+                        size="sm"
+                        variant="outline"
                         className="flex-1 rounded-[var(--radius-sm)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-smooth"
                         onClick={() => setViewItem(item)}
                       >
                         <Eye className="w-3.5 h-3.5 mr-1" />
                         Chi tiết
                       </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
+                      <Button
+                        size="sm"
+                        variant="outline"
                         className="flex-1 rounded-[var(--radius-sm)] text-[var(--success)] border-[var(--success)] hover:bg-[var(--success)] hover:text-white transition-smooth"
                         onClick={() => setUseItem(item)}
                       >

@@ -42,7 +42,7 @@ const neededIngredients = [
   { name: "Gạo - 2kg", checked: true },
 ];
 
-export default function MealPlan() {
+export function MealPlan() {
   const { success, info, warning } = useToastContext();
   const [mealPlan, setMealPlan] = useState<MealPlanType>(initialMealPlan);
   const [showAddMeal, setShowAddMeal] = useState(false);
@@ -145,7 +145,7 @@ export default function MealPlan() {
             <Sparkles className="w-4 h-4 mr-2" />
             Tạo tự động
           </Button>
-          <Button 
+          <Button
             className="bg-gradient-purple text-white font-semibold shadow-[var(--shadow-btn)] hover-lift rounded-[var(--radius-btn)] px-6 py-6"
             onClick={() => {
               setAddingTo(null);
@@ -189,7 +189,7 @@ export default function MealPlan() {
                       return (
                         <td key={`${day}-${time}`} className="p-2">
                           {meal ? (
-                            <div 
+                            <div
                               className="bg-[var(--card-bg)] p-3 rounded-[var(--radius-sm)] border-2 border-[var(--border-purple)] hover:border-[var(--gold)] hover:shadow-md transition-smooth cursor-pointer group relative"
                               onClick={() => handleClickMeal(meal, day, time)}
                             >
@@ -208,7 +208,7 @@ export default function MealPlan() {
                               </button>
                             </div>
                           ) : (
-                            <button 
+                            <button
                               className="w-full p-3 rounded-[var(--radius-sm)] border-2 border-dashed border-[var(--border-purple)] hover:border-[var(--purple-deep)] hover:bg-[var(--card-bg)] transition-smooth text-[var(--text-muted)] hover:text-[var(--purple-deep)] group"
                               onClick={() => handleAddSuggestedDish(day, time)}
                             >
@@ -248,8 +248,8 @@ export default function MealPlan() {
                     <p className="text-xs text-[var(--text-muted)]">{dish.time} • {dish.difficulty}</p>
                   </div>
                 </div>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   className="bg-gradient-gold text-white rounded-[var(--radius-sm)] hover-lift font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={() => {
                     setAddingTo(null);
@@ -279,8 +279,8 @@ export default function MealPlan() {
           </CardHeader>
           <CardContent className="space-y-3">
             {ingredients.map((item, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`flex items-center gap-3 p-3 rounded-[var(--radius-sm)] transition-smooth cursor-pointer group ${item.checked ? 'bg-[var(--success-light)]/30 opacity-70' : 'bg-[var(--card-bg)] hover:bg-white hover:shadow-md'}`}
                 onClick={() => toggleIngredient(i)}
               >
@@ -295,7 +295,7 @@ export default function MealPlan() {
                   {item.name}
                 </span>
                 {!item.checked && (
-                  <button 
+                  <button
                     className="text-xs text-[var(--gold)] font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -307,8 +307,8 @@ export default function MealPlan() {
                 )}
               </div>
             ))}
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full rounded-[var(--radius-sm)] border-dashed border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white font-semibold transition-smooth"
               onClick={() => {
                 const unchecked = ingredients.filter(i => !i.checked);

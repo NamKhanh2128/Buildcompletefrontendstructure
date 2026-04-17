@@ -79,7 +79,7 @@ const difficultyColors: Record<string, string> = {
   "Khó": "var(--danger)",
 };
 
-export default function Recipes() {
+export function Recipes() {
   const { success, info } = useToastContext();
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
   const [searchQuery, setSearchQuery] = useState("");
@@ -127,7 +127,7 @@ export default function Recipes() {
             Khám phá và lưu công thức nấu ăn yêu thích 👨‍🍳 — {recipes.length} công thức
           </p>
         </div>
-        <Button 
+        <Button
           className="bg-gradient-gold text-white font-semibold shadow-[var(--shadow-btn)] hover-lift rounded-[var(--radius-btn)] px-6 py-6 self-start md:self-auto"
           onClick={() => setShowAddRecipe(true)}
         >
@@ -164,11 +164,10 @@ export default function Recipes() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-smooth ${
-                  selectedCategory === cat
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-smooth ${selectedCategory === cat
                     ? 'bg-gradient-gold text-white shadow-[var(--shadow-btn)]'
                     : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:bg-white hover:text-[var(--text-dark)] hover:shadow-sm'
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -190,8 +189,8 @@ export default function Recipes() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRecipes.map((recipe) => (
-            <Card 
-              key={recipe.id} 
+            <Card
+              key={recipe.id}
               className="border-none shadow-[var(--shadow-card)] hover:shadow-xl transition-all rounded-[var(--radius)] overflow-hidden group cursor-pointer"
               onClick={() => setViewRecipe(recipe)}
             >
@@ -203,7 +202,7 @@ export default function Recipes() {
                 />
                 <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute top-3 left-3">
-                  <Badge 
+                  <Badge
                     className="font-semibold border-none shadow-lg text-white"
                     style={{ backgroundColor: difficultyColors[recipe.difficulty] || 'var(--success)' }}
                   >
@@ -237,7 +236,7 @@ export default function Recipes() {
                     <span className="font-semibold text-[var(--gold)]">{recipe.rating}</span>
                   </div>
                 </div>
-                <Button 
+                <Button
                   className="w-full bg-gradient-purple text-white rounded-[var(--radius-sm)] hover-lift font-semibold"
                   onClick={e => {
                     e.stopPropagation();

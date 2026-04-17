@@ -22,7 +22,7 @@ const features = [
   },
 ];
 
-export default function AuthLayout() {
+export function AuthLayout() {
   return (
     <div className="min-h-screen flex">
       {/* Left side - Illustration */}
@@ -53,7 +53,7 @@ export default function AuthLayout() {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div 
+                <div
                   key={index}
                   className="flex items-start gap-4 bg-white/10 backdrop-blur-sm rounded-[var(--radius-lg)] p-5 border border-white/20 glass-hover transition-smooth"
                   style={{ animationDelay: `${(index + 1) * 0.1}s` }}
@@ -91,7 +91,7 @@ export default function AuthLayout() {
           </div>
         </div>
       </div>
-      
+
       {/* Right side - Auth Form */}
       <div className="flex-1 flex items-center justify-center p-8 bg-[var(--background)]">
         <div className="w-full max-w-md">

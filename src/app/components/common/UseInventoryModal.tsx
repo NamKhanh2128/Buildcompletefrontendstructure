@@ -13,11 +13,11 @@ interface UseInventoryModalProps {
   item?: any;
 }
 
-export default function UseInventoryModal({ 
-  isOpen, 
-  onClose, 
+export function UseInventoryModal({
+  isOpen,
+  onClose,
   onSubmit,
-  item 
+  item
 }: UseInventoryModalProps) {
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState("");
@@ -41,28 +41,8 @@ export default function UseInventoryModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white rounded-[var(--radius-lg)] w-full max-w-md shadow-2xl animate-slide-up">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-[#22C55E] to-[#16A34A] text-white p-6 rounded-t-[var(--radius-lg)]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Package className="w-6 h-6" />
-              <div>
-                <h2 className="text-2xl font-black">Sử dụng thực phẩm</h2>
-                <p className="text-white/90 text-sm mt-1">
-                  {item?.name || "Thực phẩm"}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-white/80 hover:text-white transition-smooth"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
+    <Modal isOpen={isOpen} onClose={onClose} title="Ghi nhận sử dụng" size="md">
+      
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
@@ -86,9 +66,9 @@ export default function UseInventoryModal({
                 disabled={quantity <= 1}
                 variant="outline"
                 size="icon"
-                className="w-12 h-12 rounded-full border-2 border-[var(--border-light)] hover:border-[#22C55E] hover:bg-[#22C55E]/5 disabled:opacity-50"
+                className="w-12 h-12 rounded-full border-2 border-[var(--border-light)] hover:border-[var(--gold)] hover:bg-[var(--gold)]/5 disabled:opacity-50"
               >
-                <MinusCircle className="w-6 h-6 text-[#22C55E]" />
+                <MinusCircle className="w-6 h-6 text-[var(--gold)]" />
               </Button>
 
               <div className="relative">
@@ -103,7 +83,7 @@ export default function UseInventoryModal({
                   }}
                   min={1}
                   max={maxQuantity}
-                  className="w-24 h-16 text-center text-3xl font-black rounded-[var(--radius-sm)] border-2 border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E]"
+                  className="w-24 h-16 text-center text-3xl font-black rounded-[var(--radius-sm)] border-2 border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)]"
                 />
               </div>
 
@@ -113,9 +93,9 @@ export default function UseInventoryModal({
                 disabled={quantity >= maxQuantity}
                 variant="outline"
                 size="icon"
-                className="w-12 h-12 rounded-full border-2 border-[var(--border-light)] hover:border-[#22C55E] hover:bg-[#22C55E]/5 disabled:opacity-50"
+                className="w-12 h-12 rounded-full border-2 border-[var(--border-light)] hover:border-[var(--gold)] hover:bg-[var(--gold)]/5 disabled:opacity-50"
               >
-                <PlusCircle className="w-6 h-6 text-[#22C55E]" />
+                <PlusCircle className="w-6 h-6 text-[var(--gold)]" />
               </Button>
             </div>
             <p className="text-center text-xs text-[var(--text-muted)] mt-2">
@@ -132,7 +112,7 @@ export default function UseInventoryModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="VD: Dùng cho món canh chua..."
-              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E] resize-none"
+              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] resize-none"
               rows={3}
             />
           </div>
@@ -149,13 +129,12 @@ export default function UseInventoryModal({
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-[#22C55E] to-[#16A34A] text-white font-semibold rounded-[var(--radius-btn)] shadow-lg hover:shadow-xl transition-smooth"
+              className="flex-1 bg-gradient-gold text-[var(--text-dark)] font-semibold rounded-[var(--radius-btn)] shadow-lg hover:shadow-xl transition-smooth"
             >
               Xác nhận sử dụng
             </Button>
           </div>
         </form>
-      </div>
     </Modal>
   );
 }

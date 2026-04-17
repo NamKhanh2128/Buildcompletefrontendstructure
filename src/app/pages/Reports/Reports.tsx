@@ -17,7 +17,7 @@ const categoryData = [
   { name: 'Khác', value: 15, color: '#3B82F6' },
 ];
 
-export default function Reports() {
+export function Reports() {
   return (
     <div className="space-y-6">
       <div>

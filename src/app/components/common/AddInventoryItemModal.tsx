@@ -16,10 +16,10 @@ interface AddInventoryItemModalProps {
 const locationOptions = ["Tủ lạnh", "Ngăn đông", "Tủ bếp", "Kệ đồ"];
 const categoryOptions = ["Thịt", "Rau củ", "Hải sản", "Trái cây", "Gia vị", "Đồ khô", "Sữa"];
 
-export default function AddInventoryItemModal({ 
-  isOpen, 
-  onClose, 
-  onSubmit 
+export function AddInventoryItemModal({
+  isOpen,
+  onClose,
+  onSubmit
 }: AddInventoryItemModalProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -47,26 +47,12 @@ export default function AddInventoryItemModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="bg-white rounded-[var(--radius-lg)] w-full max-w-md shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-[#22C55E] to-[#16A34A] text-white p-6 rounded-t-[var(--radius-lg)] sticky top-0 z-10">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-black">Thêm thực phẩm</h2>
-            <button
-              onClick={onClose}
-              className="text-white/80 hover:text-white transition-smooth"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-          <p className="text-white/90 text-sm mt-1">
+    <Modal isOpen={isOpen} onClose={onClose} title="Thêm thực phẩm" size="md">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <p className="text-[var(--text-muted)] text-sm mb-4">
             Thêm thực phẩm mới vào kho
           </p>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <Label className="text-[var(--text-dark)] font-semibold mb-2 block">
               Tên thực phẩm
@@ -75,7 +61,7 @@ export default function AddInventoryItemModal({
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="VD: Sữa tươi Vinamilk"
-              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E]"
+              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)]"
               required
             />
           </div>
@@ -90,7 +76,7 @@ export default function AddInventoryItemModal({
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                 placeholder="VD: 2"
-                className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E]"
+                className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)]"
                 required
               />
             </div>
@@ -156,7 +142,7 @@ export default function AddInventoryItemModal({
               type="date"
               value={formData.expiryDate}
               onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
-              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E]"
+              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)]"
               required
             />
           </div>
@@ -169,7 +155,7 @@ export default function AddInventoryItemModal({
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Thêm ghi chú về thực phẩm..."
-              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[#22C55E] focus-visible:border-[#22C55E] resize-none"
+              className="rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] resize-none"
               rows={3}
             />
           </div>
@@ -186,13 +172,12 @@ export default function AddInventoryItemModal({
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-[#22C55E] to-[#16A34A] text-white font-semibold rounded-[var(--radius-btn)] shadow-lg hover:shadow-xl transition-smooth"
+              className="flex-1 bg-gradient-gold text-[var(--text-dark)] font-bold rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)] hover-lift transition-smooth"
             >
               Thêm thực phẩm
             </Button>
           </div>
         </form>
-      </div>
     </Modal>
   );
 }

@@ -4,16 +4,16 @@ import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { ShoppingCart } from "lucide-react";
 
-export default function Register() {
+export function Register() {
   return (
     <div className="w-full">
       <div className="mb-8 text-center">
-        <Link to="/" className="inline-flex items-center gap-2 mb-6">
-          <div className="w-12 h-12 bg-gradient-to-br from-[#22C55E] to-[#16A34A] rounded-2xl flex items-center justify-center shadow-lg">
-            <ShoppingCart className="w-7 h-7 text-white" />
+        <Link to="/" className="inline-flex items-center gap-2 mb-6 hover-lift">
+          <div className="w-14 h-14 bg-gradient-gold rounded-2xl flex items-center justify-center shadow-[var(--shadow-btn)]">
+            <ShoppingCart className="w-7 h-7 text-[var(--text-dark)]" />
           </div>
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+        <h1 className="text-3xl font-black text-[var(--text-dark)] mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
           Tạo tài khoản
         </h1>
         <p className="text-gray-600">
@@ -29,7 +29,7 @@ export default function Register() {
               id="fullname"
               type="text"
               placeholder="Nguyễn Văn A"
-              className="h-12 rounded-xl focus-visible:ring-[#22C55E]"
+              className="h-12 rounded-xl focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] transition-smooth"
             />
           </div>
 
@@ -39,7 +39,7 @@ export default function Register() {
               id="email"
               type="email"
               placeholder="name@example.com"
-              className="h-12 rounded-xl focus-visible:ring-[#22C55E]"
+              className="h-12 rounded-xl focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] transition-smooth"
             />
           </div>
 
@@ -49,7 +49,7 @@ export default function Register() {
               id="password"
               type="password"
               placeholder="••••••••"
-              className="h-12 rounded-xl focus-visible:ring-[#22C55E]"
+              className="h-12 rounded-xl focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] transition-smooth"
             />
           </div>
 
@@ -59,13 +59,13 @@ export default function Register() {
               id="confirm-password"
               type="password"
               placeholder="••••••••"
-              className="h-12 rounded-xl focus-visible:ring-[#22C55E]"
+              className="h-12 rounded-xl focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)] transition-smooth"
             />
           </div>
 
           <Link to="/app/dashboard">
             <Button
-              className="w-full h-12 bg-gradient-to-r from-[#22C55E] to-[#16A34A] hover:shadow-lg text-white rounded-xl text-base font-semibold"
+              className="w-full h-12 bg-gradient-gold hover:shadow-lg text-[var(--text-dark)] rounded-xl text-base font-bold hover-lift transition-smooth"
             >
               Đăng ký
             </Button>
@@ -109,18 +109,18 @@ export default function Register() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Đã có tài khoản?{' '}
-          <Link to="/auth/login" className="text-[#22C55E] hover:underline font-semibold">
+            <Link to="/auth/login" className="text-[var(--gold)] hover:text-[var(--gold-hover)] transition-colors font-bold">
             Đăng nhập
           </Link>
         </p>
 
         <p className="mt-4 text-center text-xs text-gray-500">
           Bằng việc đăng ký, bạn đồng ý với{' '}
-          <a href="#" className="text-[#22C55E] hover:underline">
+          <a href="#" className="text-[var(--gold)] hover:underline">
             Điều khoản dịch vụ
           </a>{' '}
           và{' '}
-          <a href="#" className="text-[#22C55E] hover:underline">
+          <a href="#" className="text-[var(--gold)] hover:underline">
             Chính sách bảo mật
           </a>
         </p>

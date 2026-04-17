@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Check, 
-  X, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Check,
+  X,
   Calendar,
   ShoppingCart,
   CheckCircle2,
@@ -98,7 +98,7 @@ const initialLists: ShoppingList[] = [
   },
 ];
 
-export default function ShoppingList() {
+export function ShoppingList() {
   const { success, error, info } = useToastContext();
   const [lists, setLists] = useState<ShoppingList[]>(initialLists);
   const [selectedListId, setSelectedListId] = useState(1);
@@ -245,9 +245,9 @@ export default function ShoppingList() {
             Quản lý và phân công nhiệm vụ mua sắm cho cả gia đình 🛒
           </p>
         </div>
-        
+
         <div className="flex items-center gap-3 self-start md:self-auto">
-          <Button 
+          <Button
             variant="outline"
             className="border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white rounded-[var(--radius-btn)] font-semibold transition-smooth"
             onClick={() => setShowShare(true)}
@@ -255,7 +255,7 @@ export default function ShoppingList() {
             <Share2 className="w-4 h-4 mr-2" />
             Chia sẻ
           </Button>
-          <Button 
+          <Button
             className="
               bg-gradient-gold text-white font-semibold px-6 py-6
               rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)]
@@ -284,7 +284,7 @@ export default function ShoppingList() {
                 const listCompleted = list.items.filter(i => i.done).length;
                 const listTotal = list.items.length;
                 const listProgress = listTotal > 0 ? (listCompleted / listTotal) * 100 : 0;
-                
+
                 return (
                   <button
                     key={list.id}
@@ -316,24 +316,24 @@ export default function ShoppingList() {
                       <Badge
                         className={`
                           border-none font-semibold shrink-0
-                          ${list.status === 'active' 
-                            ? selectedListId === list.id 
-                              ? 'bg-white/20 text-white' 
-                              : 'bg-[var(--success-light)] text-[var(--success)]'
-                            : list.status === 'completed'
+                          ${list.status === 'active'
                             ? selectedListId === list.id
                               ? 'bg-white/20 text-white'
-                              : 'bg-[var(--info-light)] text-[var(--info)]'
-                            : selectedListId === list.id
-                            ? 'bg-white/20 text-white'
-                            : 'bg-[var(--warning-light)] text-[var(--warning)]'
+                              : 'bg-[var(--success-light)] text-[var(--success)]'
+                            : list.status === 'completed'
+                              ? selectedListId === list.id
+                                ? 'bg-white/20 text-white'
+                                : 'bg-[var(--info-light)] text-[var(--info)]'
+                              : selectedListId === list.id
+                                ? 'bg-white/20 text-white'
+                                : 'bg-[var(--warning-light)] text-[var(--warning)]'
                           }
                         `}
                       >
                         {list.status === 'active' ? 'Đang mua' : list.status === 'completed' ? 'Hoàn thành' : 'Sắp tới'}
                       </Badge>
                     </div>
-                    
+
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs">
                         <span className={selectedListId === list.id ? 'text-white/90' : 'text-[var(--text-muted)]'}>
@@ -343,17 +343,17 @@ export default function ShoppingList() {
                           {Math.round(listProgress)}%
                         </span>
                       </div>
-                      <Progress 
-                        value={listProgress} 
+                      <Progress
+                        value={listProgress}
                         className={`h-1.5 ${selectedListId === list.id ? 'bg-white/20' : ''}`}
                       />
                     </div>
                   </button>
                 );
               })}
-              
-              <Button 
-                variant="outline" 
+
+              <Button
+                variant="outline"
                 className="w-full border-dashed border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white rounded-[var(--radius-sm)] font-semibold transition-smooth mt-2"
                 onClick={() => setShowAddList(true)}
               >
@@ -374,7 +374,7 @@ export default function ShoppingList() {
                   {totalCost.toLocaleString()}₫
                 </p>
               </div>
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between items-center">
                   <span className="text-white/80">Đã mua:</span>
@@ -404,9 +404,9 @@ export default function ShoppingList() {
                     className="pl-10 rounded-[var(--radius-sm)] border-[var(--border-light)] focus-visible:ring-[var(--gold)] focus-visible:border-[var(--gold)]"
                   />
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
+                <Button
+                  variant="outline"
+                  size="icon"
                   className="rounded-[var(--radius-sm)] border-[var(--border-light)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-smooth"
                   onClick={() => setShowFilter(true)}
                 >
@@ -414,9 +414,9 @@ export default function ShoppingList() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
+                    <Button
+                      variant="outline"
+                      size="icon"
                       className="rounded-[var(--radius-sm)] border-[var(--border-light)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-smooth"
                     >
                       <MoreVertical className="w-4 h-4" />
@@ -494,8 +494,8 @@ export default function ShoppingList() {
                     key={item.id}
                     className={`
                       flex items-center gap-4 p-4 rounded-[var(--radius-sm)] transition-smooth
-                      ${item.done 
-                        ? 'bg-[var(--card-bg)] opacity-70' 
+                      ${item.done
+                        ? 'bg-[var(--card-bg)] opacity-70'
                         : 'bg-white border border-[var(--border-light)] hover:border-[var(--gold)] hover:shadow-md'
                       }
                     `}
@@ -513,7 +513,7 @@ export default function ShoppingList() {
                     >
                       {item.done && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
                     </button>
-                    
+
                     <span className="text-2xl">{item.emoji}</span>
 
                     <div className="flex-1 min-w-0">
@@ -543,25 +543,25 @@ export default function ShoppingList() {
                     </div>
 
                     <div className="flex items-center gap-1 flex-shrink-0">
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         className="text-[var(--text-muted)] hover:text-[var(--info)] hover:bg-[var(--info-light)] transition-smooth rounded-[10px] w-8 h-8"
                         onClick={() => setViewItem(item)}
                       >
                         <Eye className="w-3.5 h-3.5" />
                       </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         className="text-[var(--text-muted)] hover:text-[var(--gold)] hover:bg-[var(--gold)]/10 transition-smooth rounded-[10px] w-8 h-8"
                         onClick={() => setEditItem(item)}
                       >
                         <Pencil className="w-3.5 h-3.5" />
                       </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
                         className="text-[var(--text-muted)] hover:text-[var(--danger)] hover:bg-[var(--danger-light)] transition-smooth rounded-[10px] w-8 h-8"
                         onClick={() => setDeleteItem(item)}
                       >
@@ -572,8 +572,8 @@ export default function ShoppingList() {
                 ))
               )}
 
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full rounded-[var(--radius-sm)] border-dashed border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white font-semibold transition-smooth mt-2"
                 onClick={() => setShowAddItem(true)}
               >

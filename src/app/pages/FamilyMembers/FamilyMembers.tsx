@@ -37,7 +37,7 @@ const roleColors: Record<string, string> = {
   "Khách": "bg-[var(--info-light)] text-[var(--info)]",
 };
 
-export default function FamilyMembers() {
+export function FamilyMembers() {
   const { success, error, info } = useToastContext();
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [showInvite, setShowInvite] = useState(false);
@@ -92,7 +92,7 @@ export default function FamilyMembers() {
             Quản lý thành viên trong nhóm — {members.length} người 👨‍👩‍👧‍👦
           </p>
         </div>
-        <Button 
+        <Button
           className="bg-gradient-gold text-white font-semibold shadow-[var(--shadow-btn)] hover-lift rounded-[var(--radius-btn)] px-6 py-6 self-start md:self-auto"
           onClick={() => setShowInvite(true)}
         >
@@ -118,8 +118,8 @@ export default function FamilyMembers() {
       {/* Members Grid */}
       <div className="grid md:grid-cols-2 gap-6">
         {members.map((member) => (
-          <Card 
-            key={member.id} 
+          <Card
+            key={member.id}
             className="border-none shadow-[var(--shadow-card)] hover:shadow-xl transition-all rounded-[var(--radius)] hover-lift group"
           >
             <CardContent className="p-6">
@@ -158,27 +158,27 @@ export default function FamilyMembers() {
 
               {/* Action Buttons */}
               <div className="flex gap-2 mt-4 pt-4 border-t border-[var(--border-light)]">
-                <Button 
-                  size="sm" 
-                  variant="outline" 
+                <Button
+                  size="sm"
+                  variant="outline"
                   className="flex-1 rounded-[var(--radius-sm)] hover:border-[var(--gold)] hover:text-[var(--gold)] transition-smooth"
                   onClick={() => setViewMember(member)}
                 >
                   <Eye className="w-3.5 h-3.5 mr-1.5" />
                   Xem
                 </Button>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
+                <Button
+                  size="sm"
+                  variant="outline"
                   className="flex-1 rounded-[var(--radius-sm)] hover:border-[var(--purple-deep)] hover:text-[var(--purple-deep)] transition-smooth"
                   onClick={() => setEditMember(member)}
                 >
                   <Pencil className="w-3.5 h-3.5 mr-1.5" />
                   Sửa
                 </Button>
-                <Button 
-                  size="sm" 
-                  variant="outline" 
+                <Button
+                  size="sm"
+                  variant="outline"
                   className="rounded-[var(--radius-sm)] hover:border-[var(--info)] hover:text-[var(--info)] transition-smooth px-2"
                   onClick={() => setManagePerm(member)}
                   title="Quản lý quyền"
@@ -186,9 +186,9 @@ export default function FamilyMembers() {
                   <Shield className="w-3.5 h-3.5" />
                 </Button>
                 {member.role !== "Trưởng nhóm" && (
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
+                  <Button
+                    size="sm"
+                    variant="ghost"
                     className="rounded-[var(--radius-sm)] hover:text-[var(--danger)] hover:bg-[var(--danger-light)] transition-smooth px-2"
                     onClick={() => setDeleteMember(member)}
                     title="Xóa thành viên"

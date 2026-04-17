@@ -35,7 +35,7 @@ const recentActivities = [
   { user: "Phạm Thị D", action: "Thêm công thức mới", time: "2 giờ trước", icon: Activity, color: "bg-orange-100 text-orange-600" },
 ];
 
-export default function AdminDashboard() {
+export function AdminDashboard() {
   return (
     <div className="space-y-6">
       <PageHeader

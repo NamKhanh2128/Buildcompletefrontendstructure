@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import { GlobalToastContainer } from './components/common/GlobalToastContainer';
 
 function App() {
+  console.log("App: rendering...");
   return (
     <ToastProvider>
       <RouterProvider router={router} />

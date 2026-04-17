@@ -15,9 +15,9 @@ const sizes = {
 export function LoadingSpinner({ size = 'md', className = '', text }: LoadingSpinnerProps) {
   return (
     <div className={`flex flex-col items-center justify-center gap-3 ${className}`}>
-      <Loader2 
-        size={sizes[size]} 
-        className="animate-spin text-[var(--gold)]" 
+      <Loader2
+        size={sizes[size]}
+        className="animate-spin text-[var(--gold)]"
       />
       {text && (
         <p className="text-sm text-[var(--text-muted)]">{text}</p>

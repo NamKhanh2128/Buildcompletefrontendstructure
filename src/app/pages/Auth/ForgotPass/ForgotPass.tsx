@@ -4,7 +4,7 @@ import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 
-export default function ForgotPassword() {
+export function ForgotPassword() {
   return (
     <div className="w-full">
       <div className="mb-8 text-center">

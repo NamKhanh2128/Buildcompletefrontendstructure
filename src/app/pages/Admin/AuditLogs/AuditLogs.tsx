@@ -70,7 +70,7 @@ const auditLogs = [
   },
 ];
 
-export default function AuditLogs() {
+export function AuditLogs() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");

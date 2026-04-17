@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { 
-  ShoppingCart, 
-  Package, 
-  TrendingUp, 
+import {
+  ShoppingCart,
+  Package,
+  TrendingUp,
   AlertTriangle,
   Calendar,
   Plus,
@@ -19,13 +19,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
-import { 
+import {
   AreaChart,
   Area,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
@@ -110,7 +110,7 @@ const initialTodayMeals = [
   { id: 3, time: 'Tối • 18:30', dish: 'Bún chả Hà Nội', status: 'pending', emoji: '🍲' },
 ];
 
-export default function Dashboard() {
+export function Dashboard() {
   const navigate = useNavigate();
   const { success, info } = useToastContext();
   const [showQuickAction, setShowQuickAction] = useState(false);
@@ -176,8 +176,8 @@ export default function Dashboard() {
             Chào {getHour()}, <span className="text-[var(--gold)] font-semibold">Nguyễn Văn A</span>! Đây là tổng quan gia đình hôm nay 🌤️
           </p>
         </div>
-        
-        <Button 
+
+        <Button
           onClick={() => setShowQuickAction(true)}
           className="
             bg-gradient-gold text-white font-semibold px-6 py-6
@@ -196,8 +196,8 @@ export default function Dashboard() {
         {summaryCards.map((card, index) => {
           const Icon = card.icon;
           return (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className="
                 border-none shadow-[var(--shadow-card)] 
                 rounded-[var(--radius)] overflow-hidden
@@ -278,25 +278,25 @@ export default function Dashboard() {
               <AreaChart data={expenseData}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--gold)" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="var(--gold)" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="var(--gold)" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="var(--gold)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-purple)" vertical={false} />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="var(--text-muted)" 
+                <XAxis
+                  dataKey="name"
+                  stroke="var(--text-muted)"
                   style={{ fontSize: '12px', fontFamily: 'var(--font-body)' }}
                   axisLine={false}
                   tickLine={false}
                 />
-                <YAxis 
-                  stroke="var(--text-muted)" 
+                <YAxis
+                  stroke="var(--text-muted)"
                   style={{ fontSize: '12px', fontFamily: 'var(--font-body)' }}
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{
                     backgroundColor: 'white',
                     border: 'none',
@@ -305,10 +305,10 @@ export default function Dashboard() {
                     fontFamily: 'var(--font-body)',
                   }}
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="var(--gold)" 
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="var(--gold)"
                   strokeWidth={3}
                   fill="url(#colorValue)"
                 />
@@ -345,7 +345,7 @@ export default function Dashboard() {
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{
                         backgroundColor: 'white',
                         border: 'none',
@@ -357,12 +357,12 @@ export default function Dashboard() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              
+
               <div className="space-y-3 flex flex-col justify-center">
                 {categoryData.map((category, index) => (
                   <div key={index} className="flex items-center gap-3">
-                    <div 
-                      className="w-3 h-3 rounded-full flex-shrink-0" 
+                    <div
+                      className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: category.color }}
                     />
                     <div className="flex-1 min-w-0">
@@ -407,8 +407,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             {expiryAlerts.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="flex items-center justify-between p-3 bg-[var(--card-bg)] rounded-[var(--radius-sm)] hover:bg-white hover:shadow-md transition-smooth group cursor-pointer"
                 onClick={() => setSelectedInventoryItem({
                   name: item.name,
@@ -431,7 +431,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge 
+                  <Badge
                     className={`
                       border-none font-bold shrink-0
                       ${item.priority === 'high' ? 'bg-[var(--danger-light)] text-[var(--danger)]' : ''}
@@ -445,8 +445,8 @@ export default function Dashboard() {
                 </div>
               </div>
             ))}
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full border-dashed border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-white rounded-[var(--radius-sm)] font-semibold transition-smooth"
               onClick={handleViewAllExpiry}
             >
@@ -477,8 +477,8 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             {todayMeals.map((meal, index) => (
-              <div 
-                key={meal.id} 
+              <div
+                key={meal.id}
                 className="flex items-center gap-3 p-3 bg-[var(--card-bg)] rounded-[var(--radius-sm)] hover:bg-white hover:shadow-md transition-smooth group cursor-pointer"
                 onClick={() => {
                   info(`${meal.dish}`, `${meal.time} — Xem chi tiết trong Kế hoạch bữa ăn`);
@@ -508,8 +508,8 @@ export default function Dashboard() {
                 )}
               </div>
             ))}
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full border-dashed border-[var(--purple-deep)] text-[var(--purple-deep)] hover:bg-[var(--purple-deep)] hover:text-white rounded-[var(--radius-sm)] font-semibold transition-smooth"
               onClick={() => setShowAddMeal(true)}
             >
@@ -572,7 +572,7 @@ export default function Dashboard() {
 
       {/* Footer Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div 
+        <div
           className="bg-white rounded-[var(--radius)] p-4 shadow-[var(--shadow-card)] hover-lift transition-smooth cursor-pointer"
           onClick={() => navigate("/app/recipes")}
         >
@@ -582,7 +582,7 @@ export default function Dashboard() {
           <p className="text-2xl font-black text-[var(--text-dark)]">24</p>
           <Progress value={65} className="mt-2 h-1.5" />
         </div>
-        <div 
+        <div
           className="bg-white rounded-[var(--radius)] p-4 shadow-[var(--shadow-card)] hover-lift transition-smooth cursor-pointer"
           onClick={() => navigate("/app/family")}
         >

@@ -33,7 +33,7 @@ const initialCategories = [
   { id: "3", name: "Món chính", type: "Công thức", count: 67 },
 ];
 
-export default function MasterData() {
+export function MasterData() {
   const [ingredients, setIngredients] = useState(initialIngredients);
   const [recipes, setRecipes] = useState(initialRecipes);
   const [selectedItem, setSelectedItem] = useState<any>(null);
@@ -235,11 +235,17 @@ export default function MasterData() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="rounded-[var(--radius-sm)]">
-                        <DropdownMenuItem className="cursor-pointer rounded-[8px]">
+                        <DropdownMenuItem 
+                          className="cursor-pointer rounded-[8px]"
+                          onClick={() => toast.info("Tính năng chỉnh sửa danh mục đang được phát triển")}
+                        >
                           <Edit className="w-4 h-4 mr-2" />
                           Chỉnh sửa
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer rounded-[8px] text-red-600">
+                        <DropdownMenuItem 
+                          className="cursor-pointer rounded-[8px] text-red-600"
+                          onClick={() => toast.error("Bạn không có quyền xóa danh mục hệ thống")}
+                        >
                           <Trash2 className="w-4 h-4 mr-2" />
                           Xóa
                         </DropdownMenuItem>
@@ -272,8 +278,8 @@ export default function MasterData() {
               ? "Thêm nguyên liệu mới"
               : "Thêm công thức mới"
             : activeTab === "ingredients"
-            ? "Chỉnh sửa nguyên liệu"
-            : "Chỉnh sửa công thức"
+              ? "Chỉnh sửa nguyên liệu"
+              : "Chỉnh sửa công thức"
         }
         type={activeTab === "ingredients" ? "ingredient" : "recipe"}
       />

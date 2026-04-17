@@ -11,37 +11,37 @@ import { Textarea } from "../../../components/ui/textarea";
 import { PageHeader } from "../../../components/common/PageHeader";
 import { toast } from "../../../components/common/Toast";
 
-export default function Settings() {
+export function Settings() {
   const [settings, setSettings] = useState({
     // General
     siteName: "Đi Chợ Tiện Lợi",
     siteDescription: "Ứng dụng quản lý mua sắm thông minh",
     language: "vi",
     timezone: "Asia/Ho_Chi_Minh",
-    
+
     // Notifications
     emailNotifications: true,
     pushNotifications: true,
     smsNotifications: false,
     notificationEmail: "admin@dichotienloi.com",
-    
+
     // Security
     twoFactorAuth: true,
     sessionTimeout: "3600",
     passwordExpiry: "90",
     maxLoginAttempts: "5",
-    
+
     // Email
     smtpHost: "smtp.gmail.com",
     smtpPort: "587",
     smtpUsername: "noreply@dichotienloi.com",
     smtpPassword: "••••••••",
-    
+
     // Backup
     autoBackup: true,
     backupFrequency: "daily",
     backupRetention: "30",
-    
+
     // Performance
     cacheEnabled: true,
     compressionEnabled: true,
@@ -120,7 +120,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt chung</h3>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="siteName" className="text-[var(--text-dark)] font-semibold">
@@ -187,7 +187,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt thông báo</h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] hover:bg-gray-50 transition-smooth">
                   <div className="flex-1">
@@ -244,7 +244,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt bảo mật</h3>
-              
+
               <div className="flex items-center justify-between p-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] hover:bg-gray-50 transition-smooth">
                 <div className="flex-1">
                   <p className="font-bold text-[var(--text-dark)]">Xác thực 2 bước</p>
@@ -305,7 +305,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt SMTP</h3>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="smtpHost" className="text-[var(--text-dark)] font-semibold">
@@ -365,7 +365,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt sao lưu</h3>
-              
+
               <div className="flex items-center justify-between p-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] hover:bg-gray-50 transition-smooth">
                 <div className="flex-1">
                   <p className="font-bold text-[var(--text-dark)]">Tự động sao lưu</p>
@@ -420,7 +420,7 @@ export default function Settings() {
           <Card className="border-none shadow-[var(--shadow-card)] rounded-[var(--radius)] animate-slide-up bg-white">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-xl font-black text-[var(--text-dark)]">Cài đặt hiệu suất</h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] hover:bg-gray-50 transition-smooth">
                   <div className="flex-1">

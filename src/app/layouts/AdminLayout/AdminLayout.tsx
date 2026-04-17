@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Outlet, Link, useLocation } from "react-router";
-import { 
-  LayoutDashboard, 
-  Users, 
-  Database, 
-  FileText, 
-  BarChart3, 
-  Settings, 
-  Menu, 
-  X, 
-  Bell, 
+import { Outlet, Link, useLocation, useNavigate } from "react-router";
+import { toast } from "../../components/common/Toast";
+import {
+  LayoutDashboard,
+  Users,
+  Database,
+  FileText,
+  BarChart3,
+  Settings,
+  Menu,
+  X,
+  Bell,
   Search,
   Shield,
   LogOut,
@@ -37,9 +38,15 @@ const navigation = [
   { name: 'Cài đặt', href: '/admin/settings', icon: Settings },
 ];
 
-export default function AdminLayout() {
+export function AdminLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    toast.success("Đã đăng xuất thành công!");
+    navigate("/admin/login");
+  };
 
   const isActive = (href: string) => location.pathname === href;
 
@@ -52,9 +59,8 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-[var(--card-bg)]">
       {/* Sidebar - Purple Theme with White Accent */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-white text-[var(--text-dark)] transition-all duration-300 z-50 border-r border-[var(--border-light)] shadow-[0_4px_24px_rgba(123,94,167,0.08)] ${
-          sidebarCollapsed ? 'w-20' : 'w-72'
-        }`}
+        className={`fixed left-0 top-0 h-screen bg-white text-[var(--text-dark)] transition-all duration-300 z-50 border-r border-[var(--border-light)] shadow-[0_4px_24px_rgba(123,94,167,0.08)] ${sidebarCollapsed ? 'w-20' : 'w-72'
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Logo & Toggle */}
@@ -93,11 +99,10 @@ export default function AdminLayout() {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-sm)] transition-smooth group ${
-                    active
+                  className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-sm)] transition-smooth group ${active
                       ? 'bg-gradient-purple text-white shadow-[var(--shadow-btn)]'
                       : 'text-[var(--text-muted)] hover:bg-[var(--card-bg)] hover:text-[var(--purple-deep)] hover-lift-sm'
-                  } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                    } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.name : undefined}
                 >
                   <Icon className={`w-5 h-5 flex-shrink-0 ${active ? '' : 'group-hover:scale-110 transition-transform'}`} strokeWidth={2.5} />
@@ -130,6 +135,7 @@ export default function AdminLayout() {
                   variant="ghost"
                   size="icon"
                   className="text-[var(--text-muted)] hover:bg-white hover:text-red-600 rounded-[8px] transition-smooth"
+                  onClick={handleLogout}
                 >
                   <LogOut className="w-4 h-4" strokeWidth={2.5} />
                 </Button>
@@ -141,9 +147,8 @@ export default function AdminLayout() {
 
       {/* Main Content */}
       <div
-        className={`transition-all duration-300 ${
-          sidebarCollapsed ? 'ml-20' : 'ml-72'
-        }`}
+        className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-20' : 'ml-72'
+          }`}
       >
         {/* Top Navbar - White with Purple Accents */}
         <header className="h-16 bg-white border-b border-[var(--border-light)] sticky top-0 z-40 shadow-sm">
@@ -193,7 +198,10 @@ export default function AdminLayout() {
                     Cài đặt
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-[var(--border-light)]" />
-                  <DropdownMenuItem className="cursor-pointer rounded-[8px] font-medium text-red-600 focus:bg-red-50 focus:text-red-700">
+                  <DropdownMenuItem 
+                    className="cursor-pointer rounded-[8px] font-medium text-red-600 focus:bg-red-50 focus:text-red-700"
+                    onClick={handleLogout}
+                  >
                     <LogOut className="w-4 h-4 mr-2" strokeWidth={2.5} />
                     Đăng xuất
                   </DropdownMenuItem>

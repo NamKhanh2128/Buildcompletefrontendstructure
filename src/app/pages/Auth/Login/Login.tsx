@@ -6,7 +6,7 @@ import { Checkbox } from "../../../components/ui/checkbox";
 import { Sparkles, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
-export default function Login() {
+export function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -57,8 +57,8 @@ export default function Login() {
               <Label htmlFor="password" className="text-[var(--text-dark)] font-semibold">
                 Mật khẩu
               </Label>
-              <Link 
-                to="/auth/forgot-password" 
+              <Link
+                to="/auth/forgot-password"
                 className="text-sm text-[var(--gold)] hover:text-[var(--gold-hover)] font-medium transition-colors"
               >
                 Quên mật khẩu?
@@ -170,8 +170,8 @@ export default function Login() {
 
         <p className="mt-8 text-center text-sm text-[var(--text-muted)]">
           Chưa có tài khoản?{' '}
-          <Link 
-            to="/auth/register" 
+          <Link
+            to="/auth/register"
             className="text-[var(--gold)] hover:text-[var(--gold-hover)] font-bold transition-colors"
           >
             Đăng ký ngay

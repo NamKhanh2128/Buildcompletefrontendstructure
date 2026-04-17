@@ -10,7 +10,7 @@ import { Badge } from "../../components/ui/badge";
 import { useToastContext } from "../../context/ToastContext";
 import { Modal } from "../../components/common";
 
-export default function Settings() {
+export function Settings() {
   const { success, error, info, warning } = useToastContext();
 
   // Profile state
@@ -121,7 +121,7 @@ export default function Settings() {
                   {profile.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <button 
+              <button
                 className="absolute -bottom-1 -right-1 w-7 h-7 bg-[var(--purple-deep)] rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                 onClick={() => info("📷 Tính năng đang phát triển", "Tải ảnh đại diện sẽ sớm ra mắt!")}
               >
@@ -176,7 +176,7 @@ export default function Settings() {
               />
             </div>
           </div>
-          <Button 
+          <Button
             className="bg-gradient-gold text-white rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)] hover-lift font-semibold px-8"
             onClick={handleSaveProfile}
           >
@@ -231,7 +231,7 @@ export default function Settings() {
           <CardDescription>Quản lý mật khẩu và bảo mật tài khoản</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <button 
+          <button
             className="w-full flex items-center justify-between p-4 rounded-[var(--radius-sm)] border border-[var(--border-light)] hover:border-[var(--purple-deep)] hover:bg-[var(--card-bg)] transition-smooth group"
             onClick={() => setShowChangePassword(true)}
           >
@@ -247,7 +247,7 @@ export default function Settings() {
             <ChevronRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--purple-deep)] group-hover:translate-x-1 transition-all" />
           </button>
 
-          <button 
+          <button
             className="w-full flex items-center justify-between p-4 rounded-[var(--radius-sm)] border border-[var(--border-light)] hover:border-[var(--info)] hover:bg-[var(--card-bg)] transition-smooth group"
             onClick={() => success("🔐 Tính năng đang cập nhật", "Xác thực 2 bước sẽ sớm ra mắt!")}
           >
@@ -284,18 +284,17 @@ export default function Settings() {
                 <button
                   key={lang.value}
                   onClick={() => setLanguage(lang.value)}
-                  className={`p-3 rounded-[var(--radius-sm)] border-2 font-semibold text-sm transition-smooth ${
-                    language === lang.value
+                  className={`p-3 rounded-[var(--radius-sm)] border-2 font-semibold text-sm transition-smooth ${language === lang.value
                       ? 'border-[var(--gold)] bg-[var(--gold)]/5 text-[var(--gold)]'
                       : 'border-[var(--border-light)] text-[var(--text-muted)] hover:border-[var(--gold)]/50'
-                  }`}
+                    }`}
                 >
                   {lang.label}
                 </button>
               ))}
             </div>
           </div>
-          <Button 
+          <Button
             className="bg-gradient-gold text-white rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)] hover-lift font-semibold"
             onClick={handleSaveLanguage}
           >
@@ -314,8 +313,8 @@ export default function Settings() {
           <CardDescription>Các hành động không thể hoàn tác</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="border-[var(--danger)] text-[var(--danger)] hover:bg-[var(--danger)] hover:text-white rounded-[var(--radius-btn)] font-semibold transition-smooth"
             onClick={handleDeleteAccount}
           >

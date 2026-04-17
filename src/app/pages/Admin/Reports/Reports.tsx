@@ -59,7 +59,7 @@ const topUsers = [
   { name: "Hoàng Văn E", orders: 25, revenue: "1.4M", avatar: "HE" },
 ];
 
-export default function Reports() {
+export function Reports() {
   return (
     <div className="space-y-6">
       <PageHeader
