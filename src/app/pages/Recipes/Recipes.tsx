@@ -12,13 +12,14 @@ type Recipe = {
   id: number;
   name: string;
   time: string;
+  cookingTime?: number;
   servings: number;
   image: string;
   difficulty: string;
   category: string;
   rating: number;
   description?: string;
-  ingredients?: string[];
+  ingredients?: { name: string; quantity: string }[];
   steps?: string[];
 };
 
@@ -100,18 +101,20 @@ export function Recipes() {
   }, [recipes, searchQuery, selectedCategory]);
 
   const handleAddRecipe = (data: any) => {
+    const cookingMins = parseInt(data.cookingTime || 30);
     const newRecipe: Recipe = {
       id: Date.now(),
       name: data.name || "Công thức mới",
-      time: `${data.cookingTime || 30} phút`,
+      time: `${cookingMins} phút`,
+      cookingTime: cookingMins,
       servings: parseInt(data.servings || 4),
       image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
       difficulty: data.difficulty || "Dễ",
-      category: data.category || "Khác",
+      category: data.cuisine || data.category || "Khác",
       rating: 4.0,
       description: data.description || "Công thức ngon cho cả gia đình.",
-      ingredients: [],
-      steps: [],
+      ingredients: data.ingredients || [],
+      steps: data.steps || [],
     };
     setRecipes(prev => [newRecipe, ...prev]);
     success("✅ Thêm công thức thành công!", `"${newRecipe.name}" đã được lưu vào bộ sưu tập.`);

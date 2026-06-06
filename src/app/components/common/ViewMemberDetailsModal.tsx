@@ -9,12 +9,16 @@ interface ViewMemberDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   member?: any;
+  onEdit?: (member: any) => void;
+  onManagePermissions?: (member: any) => void;
 }
 
 export function ViewMemberDetailsModal({
   isOpen,
   onClose,
-  member
+  member,
+  onEdit,
+  onManagePermissions,
 }: ViewMemberDetailsModalProps) {
   if (!member) return null;
 
@@ -142,11 +146,13 @@ export function ViewMemberDetailsModal({
           <Button
             variant="outline"
             className="flex-1 rounded-[var(--radius-btn)] border-[var(--border-light)] hover:bg-[var(--card-bg)] font-semibold"
+            onClick={() => onEdit?.(member)}
           >
             Chỉnh sửa
           </Button>
           <Button
             className="flex-1 bg-gradient-purple text-white font-semibold rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)] hover-lift transition-smooth"
+            onClick={() => onManagePermissions?.(member)}
           >
             Quản lý quyền
           </Button>

@@ -101,18 +101,13 @@ export function ViewShoppingItemModal({
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3 pt-2">
+        <div className="pt-2">
           <Button
             variant="outline"
             onClick={onClose}
-            className="flex-1 rounded-[var(--radius-btn)] border-[var(--border-light)] hover:bg-[var(--card-bg)] font-semibold"
+            className="w-full rounded-[var(--radius-btn)] border-[var(--border-light)] hover:bg-[var(--card-bg)] font-semibold"
           >
             Đóng
-          </Button>
-          <Button
-            className="flex-1 bg-gradient-gold text-[var(--text-dark)] font-bold rounded-[var(--radius-btn)] shadow-[var(--shadow-btn)] hover-lift transition-smooth"
-          >
-            {item.done ? "Đánh dấu chưa mua" : "Đánh dấu đã mua"}
           </Button>
         </div>
       </div>

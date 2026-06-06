@@ -1,5 +1,5 @@
 import { X, Utensils, Clock } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -11,6 +11,7 @@ interface AddMealPlanModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: any) => void;
+  initialRecipeName?: string;
 }
 
 const mealTypes = ["Sáng", "Trưa", "Tối", "Phụ"];
@@ -28,7 +29,8 @@ const recipesList = [
 export function AddMealPlanModal({
   isOpen,
   onClose,
-  onSubmit
+  onSubmit,
+  initialRecipeName = "",
 }: AddMealPlanModalProps) {
   const [formData, setFormData] = useState({
     date: "",
@@ -38,6 +40,15 @@ export function AddMealPlanModal({
     cookingTime: "",
     notes: "",
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(prev => ({
+        ...prev,
+        recipeName: initialRecipeName || prev.recipeName,
+      }));
+    }
+  }, [isOpen, initialRecipeName]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

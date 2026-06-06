@@ -196,6 +196,7 @@ export function ShoppingList() {
       return { ...list, items: [...list.items, newItem] };
     }));
     success("✅ Thêm món thành công!", `"${newItem.name}" đã được thêm vào danh sách.`);
+    setShowAddItem(false);
   };
 
   const handleEditItem = (data: any) => {

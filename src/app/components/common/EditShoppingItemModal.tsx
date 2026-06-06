@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -30,6 +30,17 @@ export function EditShoppingItemModal({
     category: item?.category || "Thịt",
     assignee: item?.assignee || "Mẹ",
   });
+
+  useEffect(() => {
+    setFormData({
+      name: item?.name || "",
+      quantity: item?.quantity || "",
+      price: item?.price || "",
+      emoji: item?.emoji || "🥩",
+      category: item?.category || "Thịt",
+      assignee: item?.assignee || "Mẹ",
+    });
+  }, [item, isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,6 +162,7 @@ export function EditShoppingItemModal({
               <SelectItem value="Mẹ">Mẹ</SelectItem>
               <SelectItem value="Bố">Bố</SelectItem>
               <SelectItem value="Con">Con</SelectItem>
+              <SelectItem value="Tôi">Tôi</SelectItem>
             </SelectContent>
           </Select>
         </div>

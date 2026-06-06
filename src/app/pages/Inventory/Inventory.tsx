@@ -311,10 +311,18 @@ export function Inventory() {
       />
 
       {viewItem && (
-        <ViewInventoryDetailsModal
+      <ViewInventoryDetailsModal
           isOpen={!!viewItem}
           onClose={() => setViewItem(null)}
           item={viewItem}
+          onEdit={(item) => {
+            setViewItem(null);
+            setEditItem(item);
+          }}
+          onUse={(item) => {
+            setViewItem(null);
+            setUseItem(item);
+          }}
         />
       )}
 

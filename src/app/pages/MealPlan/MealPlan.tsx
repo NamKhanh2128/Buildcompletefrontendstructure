@@ -48,6 +48,7 @@ export function MealPlan() {
   const [showAddMeal, setShowAddMeal] = useState(false);
   const [showGenerate, setShowGenerate] = useState(false);
   const [addingTo, setAddingTo] = useState<{ day: string; time: string } | null>(null);
+  const [preselectedRecipe, setPreselectedRecipe] = useState("");
   const [viewingMeal, setViewingMeal] = useState<any>(null);
   const [ingredients, setIngredients] = useState(neededIngredients);
 
@@ -84,7 +85,18 @@ export function MealPlan() {
   };
 
   const handleGenerate = (data: any) => {
+    const generatedPlan: MealPlanType = {
+      T2: { Sáng: { name: "Bánh mì", emoji: "🥖" }, Trưa: { name: "Cơm gà", emoji: "🍗" }, Tối: { name: "Canh chua cá lóc", emoji: "🐟" } },
+      T3: { Sáng: { name: "Phở bò", emoji: "🍜" }, Trưa: { name: "Gà kho gưởng", emoji: "🍗" }, Tối: { name: "Thịt kho tàu", emoji: "🥩" } },
+      T4: { Sáng: null, Trưa: { name: "Cơm suờn", emoji: "🍖" }, Tối: null },
+      T5: { Sáng: null, Trưa: null, Tối: { name: "Lẩu thái", emoji: "�ae" } },
+      T6: { Sáng: null, Trưa: null, Tối: null },
+      T7: { Sáng: null, Trưa: { name: "Cơm tấm", emoji: "🍛" }, Tối: null },
+      CN: { Sáng: { name: "Xôi gà", emoji: "🍙" }, Trưa: null, Tối: { name: "Buffet", emoji: "🍱" } },
+    };
+    setMealPlan(generatedPlan);
     success("🤖 Tạo thực đơn thành công!", "Thực đơn tuần đã được tạo tự động từ AI.");
+    setShowGenerate(false);
   };
 
   const handleAddToShoppingList = (ingredient: string) => {
@@ -100,8 +112,9 @@ export function MealPlan() {
     }));
   };
 
-  const handleAddSuggestedDish = (day: string, time: string) => {
+  const handleAddSuggestedDish = (day: string, time: string, dishName?: string) => {
     setAddingTo({ day, time });
+    setPreselectedRecipe(dishName || "");
     setShowAddMeal(true);
   };
 
@@ -252,9 +265,7 @@ export function MealPlan() {
                   size="sm"
                   className="bg-gradient-gold text-white rounded-[var(--radius-sm)] hover-lift font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={() => {
-                    setAddingTo(null);
-                    setShowAddMeal(true);
-                    success("💡 Đã chọn món!", `"${dish.name}" sẵn sàng để thêm vào kế hoạch.`);
+                    handleAddSuggestedDish("", "", dish.name);
                   }}
                 >
                   Thêm
@@ -329,8 +340,9 @@ export function MealPlan() {
       {/* Modals */}
       <AddMealPlanModal
         isOpen={showAddMeal}
-        onClose={() => { setShowAddMeal(false); setAddingTo(null); }}
+        onClose={() => { setShowAddMeal(false); setAddingTo(null); setPreselectedRecipe(""); }}
         onSubmit={handleAddMeal}
+        initialRecipeName={preselectedRecipe}
       />
 
       <GenerateMealPlanModal

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import { toast } from "../../components/common/Toast";
+import { AdminProvider } from "../../context/AdminContext";
 import {
   LayoutDashboard,
   Users,
@@ -56,6 +57,7 @@ export function AdminLayout() {
   }
 
   return (
+    <AdminProvider>
     <div className="min-h-screen bg-[var(--card-bg)]">
       {/* Sidebar - Purple Theme with White Accent */}
       <aside
@@ -217,5 +219,6 @@ export function AdminLayout() {
         </main>
       </div>
     </div>
+    </AdminProvider>
   );
 }

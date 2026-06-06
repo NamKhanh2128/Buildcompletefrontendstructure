@@ -7,12 +7,16 @@ interface ViewInventoryDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   item?: any;
+  onEdit?: (item: any) => void;
+  onUse?: (item: any) => void;
 }
 
 export function ViewInventoryDetailsModal({
   isOpen,
   onClose,
-  item
+  item,
+  onEdit,
+  onUse,
 }: ViewInventoryDetailsModalProps) {
   if (!item) return null;
 
@@ -106,11 +110,13 @@ export function ViewInventoryDetailsModal({
           <Button
             variant="outline"
             className="rounded-[var(--radius-btn)] border-[var(--border-light)] hover:bg-[var(--card-bg)] font-semibold"
+            onClick={() => onEdit?.(item)}
           >
             Chỉnh sửa
           </Button>
           <Button
             className="bg-gradient-gold text-[var(--text-dark)] font-bold rounded-[var(--radius-btn)] shadow-lg hover:shadow-xl transition-smooth"
+            onClick={() => onUse?.(item)}
           >
             Sử dụng
           </Button>

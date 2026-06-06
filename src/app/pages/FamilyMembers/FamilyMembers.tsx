@@ -223,6 +223,14 @@ export function FamilyMembers() {
           isOpen={!!viewMember}
           onClose={() => setViewMember(null)}
           member={viewMember}
+          onEdit={(member) => {
+            setViewMember(null);
+            setEditMember(member);
+          }}
+          onManagePermissions={(member) => {
+            setViewMember(null);
+            setManagePerm(member);
+          }}
         />
       )}
 

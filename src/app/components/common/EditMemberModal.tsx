@@ -1,5 +1,5 @@
 import { X, User, Mail, Shield } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -15,9 +15,9 @@ interface EditMemberModalProps {
 }
 
 const roles = [
-  { value: "admin", label: "Quản trị viên", color: "from-[var(--purple)] to-[var(--purple-dark)]" },
-  { value: "member", label: "Thành viên", color: "from-[var(--gold)] to-[#D4941C]" },
-  { value: "viewer", label: "Người xem", color: "from-gray-400 to-gray-500" },
+  { value: "Trưởng nhóm", label: "Trưởng nhóm", color: "from-[var(--gold)] to-[#D4941C]" },
+  { value: "Thành viên", label: "Thành viên", color: "from-[var(--purple)] to-[var(--purple-dark)]" },
+  { value: "Khách", label: "Khách", color: "from-gray-400 to-gray-500" },
 ];
 
 export function EditMemberModal({
@@ -29,9 +29,18 @@ export function EditMemberModal({
   const [formData, setFormData] = useState({
     name: member?.name || "",
     email: member?.email || "",
-    role: member?.role || "member",
+    role: member?.role || "Thành viên",
     phone: member?.phone || "",
   });
+
+  useEffect(() => {
+    setFormData({
+      name: member?.name || "",
+      email: member?.email || "",
+      role: member?.role || "Thành viên",
+      phone: member?.phone || "",
+    });
+  }, [member, isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,14 +149,14 @@ export function EditMemberModal({
         {/* Role Description */}
         <div className="p-4 bg-[var(--card-bg)] rounded-[var(--radius-sm)]">
           <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-            {formData.role === 'admin' && (
-              "Quản trị viên có toàn quyền quản lý hệ thống, thêm/xóa thành viên và chỉnh sửa mọi dữ liệu."
+            {formData.role === 'Trưởng nhóm' && (
+              "Trưởng nhóm có toàn quyền quản lý hệ thống, thêm/xóa thành viên và chỉnh sửa mọi dữ liệu."
             )}
-            {formData.role === 'member' && (
+            {formData.role === 'Thành viên' && (
               "Thành viên có thể xem, thêm và chỉnh sửa danh sách mua sắm, kho và kế hoạch ăn."
             )}
-            {formData.role === 'viewer' && (
-              "Người xem chỉ có quyền xem các thông tin, không thể chỉnh sửa hoặc thêm mới."
+            {formData.role === 'Khách' && (
+              "Khách chỉ có quyền xem các thông tin, không thể chỉnh sửa hoặc thêm mới."
             )}
           </p>
         </div>

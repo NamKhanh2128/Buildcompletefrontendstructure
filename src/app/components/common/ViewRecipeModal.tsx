@@ -58,7 +58,7 @@ export function ViewRecipeModal({
           </div>
           <div>
             <p className="text-xs text-[var(--text-muted)]">Thời gian</p>
-            <p className="font-bold text-[var(--text-dark)]">{recipe.cookingTime || "45"} phút</p>
+            <p className="font-bold text-[var(--text-dark)]">{recipe.cookingTime ?? (recipe.time ? recipe.time.replace(" phút", "") : "45")} phút</p>
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export function ViewRecipeModal({
         <div>
           <h3 className="font-bold text-lg text-[var(--text-dark)] mb-3">Nguyên liệu</h3>
           <div className="space-y-2">
-            {(recipe.ingredients || [
+            {(recipe.ingredients && recipe.ingredients.length > 0 ? recipe.ingredients : [
               { name: "Thịt bò", quantity: "500g" },
               { name: "Bánh phở", quantity: "400g" },
               { name: "Hành tây", quantity: "1 củ" },
@@ -100,8 +100,14 @@ export function ViewRecipeModal({
             ]).map((ingredient: any, index: number) => (
               <div key={index} className="flex items-center gap-3 p-3 bg-[var(--card-bg)] rounded-[var(--radius-sm)]">
                 <div className="w-2 h-2 rounded-full bg-[var(--gold)]" />
-                <span className="flex-1 text-[var(--text-dark)]">{ingredient.name}</span>
-                <span className="font-semibold text-[var(--purple)]">{ingredient.quantity}</span>
+                {typeof ingredient === "string" ? (
+                  <span className="flex-1 text-[var(--text-dark)]">{ingredient}</span>
+                ) : (
+                  <>
+                    <span className="flex-1 text-[var(--text-dark)]">{ingredient.name}</span>
+                    <span className="font-semibold text-[var(--purple)]">{ingredient.quantity}</span>
+                  </>
+                )}
               </div>
             ))}
           </div>
